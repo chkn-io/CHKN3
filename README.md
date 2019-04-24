@@ -97,3 +97,43 @@ bootstrap.min
 fontawesome.min
 /**End
 ```
+
+
+## CONTROLLERS AND PAGES
+As what we know about Controllers, they are the one actually responsible on what must be displayed inside a View and what must be requested inside the Model. In CHKN Framework , Controllers are the most important file on your system. Controller is the place where you have to declare what will be your template to be use, the page that will display inside your template, the page title, the page stylesheet and scripts and the place where you will becreating a request in the Model.
+
+### Creating a Controller
+* You have to create a PHP file inside the folder Http/Controller/. The File name must be the name of the Controller you want, followed by the word Controller. Example: homeController.php
+* On the CHKN Console. Simply enter `chkn create controller ___name of controller___`.
+
+Every Controller will contain the following codes.
+```php
+<?php
+use App\App\Request;
+class sampleController extends Controller{
+	public function sample_page(Request $r){
+		//Call index template
+		$this->template('index');
+		//set default title
+		$this->title('CHKN Framework');
+		//set css
+		$this->css(array(
+		));
+		//set js
+		$this->js(array(
+		));
+
+		$this->body('homepage/index');
+		$this->show();
+	}
+}
+
+
+```
+
+* **$this->template('index')** - *Calling the the page template. 'index' is pertaining the the template file located at view/template/index.tpl*
+* **$this->title();** - *Set the title of the page.*
+* **$this->css(array());** - *Including stylesheets inside the page. CSS Files are stored at public/css. In addition, CSS Files are called without the .css file extension*
+* **$this->js(array());** - *Including scripts inside the page. Script Files are stored at public/js. In addition, Script Files are called without the .js file extension*
+* **$this->body('homepage/index')** - *Including the page content inside the template. This method will only going to fetch .cvf files*
+* **$this->show()** - *Compile the settings above and display the page.*
