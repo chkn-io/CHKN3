@@ -148,6 +148,89 @@ Most of the times, links are most likely use when navigating from one page to an
 <a href= "[chkn:path]controllerName/methodName">Link Name < /a>
 ```
 
+## Templating Tool
+### Passing values to your template
+Data processed by controller can be pass inside your template using the $this-> variable() method.
+```php
+//your controller 
+$this-> variable( “variable_name”, ”variable_value” ); 
+```
+```html 
+<body> 
+<p> $variable_name < /p> 
+</body>
+```
+### Passing array on your template
+Array processed by controller can be pass inside your template using the $this-> array_var() method.
+```php
+//your controller 
+$array = array( 
+0=> array( 
+"name"=> "Ben", 
+"age"=> "25" 
+), 
+1=> array( 
+"name"=> "Anna", 
+"age"=> "24" 
+) 
+); 
+$this->array_var( “array_name”, $array);
+
+```
+
+### Populating assigned array on your template using foreach
+Assigned array variable on the Controller can be populated using the CHKN Framework Templating Tool. Developers can use the foreach as shown below.
+
+<span style="color:red">Note: You can address the specific field on the array by enclosing the field name by {[ ]}</span>
+
+```html
+//on your template or page 
+<body> 
+#foreach( $array_name ){ 
+{{ 
+< p> Name: {[name]} < /p> 
+< p> Age: {[age]} < /p> 
+}} 
+#endforeach 
+</body>
+
+```
+
+### The if Condition
+You can also set a conditional statement out of the assigned variables.
+```php
+//your controller 
+$this->variable( “type”, ”active” ); 
+```
+
+```html
+//on your template or page 
+//include double quote(“”) on the variable 
+# if( “$type” == “active” ){ 
+{{ 
+<p> Value if True </p> 
+}} 
+} else{ 
+{{ 
+<p> Value if False </p> 
+}} 
+#}
+
+```
+### The For Loop
+You can easily create a looping statement such as FOR LOOP in CHKN Framework using its Templating Tool. Take note that Comparison Operator to be used must be enclosed with square bracket []
+
+
+```html
+//on your template or page 
+#for($x=0;$x[<]$data;$x++ ){ 
+{{ 
+<p> Hello World {[x]} </p> 
+}} 
+#endfor
+```
+
+
 ## Forms and CSRF Token
 Including csrf field on forms will enable a CSRF token for every form request. This will tighten the security against CSRF or Cross-Site Request Forgery.
 ```html
