@@ -72,10 +72,28 @@ Include a global styles and scripts on the application.
 
 * **Include Global CSS** - *Go to `config/vendors/stylesheet.conf`*
 ```
+/**Set your App's Global Stylesheet/Libraries
+/**Include every file after a new line
+/**Save the stylesheet inside public/vendor/css/
+/**Don't include the file extension
 
+/**Start
+bootstrap.min
+fontawesome.min
+fontawesome-all
+/**End
 ```
 
 * **Include Global Scripts** - *Go to `config/vendors/scripts.conf`*
 ```
+/**Set your App's Global JavaScript/Libraries
+/**Include every file after a new line
+/**Save the scripts inside public/vendor/js/
+/**Don't include the file extension
 
+/**Start
+jquery
+bootstrap.min
+fontawesome.min
+/**End
 ```
