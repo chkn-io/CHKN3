@@ -137,3 +137,134 @@ class sampleController extends Controller{
 * **$this->js(array());** - *Including scripts inside the page. Script Files are stored at public/js. In addition, Script Files are called without the .js file extension*
 * **$this->body('homepage/index')** - *Including the page content inside the template. This method will only going to fetch .cvf files*
 * **$this->show()** - *Compile the settings above and display the page.*
+
+
+## Routing
+In CHKN Framework, navigating to a page means navigating to a Controller. As you created a page you must also create a Controller that will hold all the request or processes of that page
+### Navigation through Links
+Most of the times, links are most likely use when navigating from one page to another. Exactly what you can do in CHKN . On creating link location you must follow the exact format. [chkn:path]controllerName/methodName
+
+```html
+<a href= "[chkn:path]controllerName/methodName">Link Name < /a>
+```
+
+## Forms and CSRF Token
+Including csrf field on forms will enable a CSRF token for every form request. This will tighten the security against CSRF or Cross-Site Request Forgery.
+```html
+<form method="post" action="controller/method">
+	[form:csrf]
+	<label>Name</label><br>
+	<input type="text" name="name"><br>
+	<label>Address</label><br>
+	<input type="text" name="address"><br>
+	<label>Age</label><br>
+	<input type="number" name="age"><br>
+	<button>Submit</button>
+</form>
+```
+
+## Fetching Request
+```php
+public function fetchData(Request $r){
+	$name = $r->name;
+	$address = $r->address;
+	$age = $r->age;
+}
+```
+
+## QUERY BUILDER
+On CHKN Framework, Database operations such as Create, Read, Update and Delete are handle using the QUERY BUILDER. 
+
+### Select Query
+On CHKN Query Builder, Select Operation is executed using `$this->CRUD->select()`;
+#### Select All
+```php
+public function select(Request $r){
+	$data = $this->CRUD->select("table")->fetch();
+}
+```
+
+#### Select By Table Field
+```php
+public function select(Request $r){
+	$data = $this->CRUD->select("table")
+			->where("table_field","=","value")
+			->fetch();
+}
+```
+
+#### Select with JOIN
+```php
+public function select(Request $r){
+	$data = $this->CRUD->select("table")
+			->join("other_table","table.field","=","other_table.field")
+			->where("table.field","=","value")
+			->fetch();
+}
+```
+
+#### Select with Limit
+```php
+public function select(Request $r){
+	$data = $this->CRUD->select("table")
+			->limit(1)
+			->fetch();
+}
+```
+#### Select By Order
+```php
+public function select(Request $r){
+	$data = $this->CRUD->select("table")
+			->orderBy("table_field","ASC")
+			->fetch();
+}
+```
+
+### Insert Query
+On CHKN Query Builder, Insert Operation is executed using `$this->CRUD->insert()`;
+#### INSERT
+```php
+public function insert(Request $r){
+	$data = $this->CRUD->insert("table")
+			->field("field_name","value")
+			->field("field_name","value")
+			->field("field_name","value")
+			->execute();
+}
+```
+
+### Delete Query
+On CHKN Query Builder, Delete Operation is executed using `$this->CRUD->delete()`;
+#### DELETE
+```php
+public function delete(Request $r){
+	$data = $this->CRUD->delete("table")
+			->where("field_name","=","value")
+			->execute();
+}
+```
+
+### Update Query
+On CHKN Query Builder, Update Operation is executed using `$this->CRUD->update()`;
+#### UPDATE
+```php
+public function update(Request $r){
+	$data = $this->CRUD->update("table")
+			->field("field_name","value")
+			->field("field_name","value")
+			->field("field_name","value")
+			->where("field_name","=","value")
+			->execute();
+}
+```
+
+### Query
+On CHKN Query Builder, You can create your own query using `$this->CRUD->query()`;
+#### QUERY
+```php
+public function query(Request $r){
+	$data = $this->CRUD->query("SELECT * FROM table WHERE field={field}")
+			->bind("field","value of field")
+			->execute();
+}
+```
