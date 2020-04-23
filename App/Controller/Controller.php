@@ -49,8 +49,10 @@ class Controller extends App_Controller{
 
 
 	function show(){
-        $this->assign('form:csrf','<input type="hidden" name="CSRFToken" value="'.$_SESSION["CSRF"].'">');
-        $this->assign('chkn:csrf',$_SESSION["CSRF"]);
+		if(isset($_SESSION["CSRF"])){
+			$this->assign('form:csrf','<input type="hidden" name="CSRFToken" value="'.$_SESSION["CSRF"].'">');
+        	$this->assign('chkn:csrf',$_SESSION["CSRF"]);
+		}
 		$this->dispose();
 	}
 
@@ -110,5 +112,24 @@ class Controller extends App_Controller{
     		$array[$x][$field] = $this->seal($array[$x][$field]);
     	}
     	return $array;
-    }
+	}
+	
+	function forceCSRF(){
+		if(isset($_SESSION["CSRFToken"])){
+			if(isset($_REQUEST["CSRFToken"])){
+				$t = $this->csrf->validator($_REQUEST["CSRFToken"]);
+				if($t != 1){
+					$this->invalid_request();
+					exit;
+				}
+			}else{
+				$this->invalid_request();
+				exit;
+			}
+		}else{			
+			$this->invalid_request();
+			exit;
+		}
+		
+	}
 }

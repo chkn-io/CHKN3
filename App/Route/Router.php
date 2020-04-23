@@ -67,14 +67,13 @@ class Router extends App_Loader{
 						}
 					}else{
 						if(count($_REQUEST) > 1){
+							$CSRF->init();
 							$this->invalid_request();
 						}else{
 							$CSRF->init();
 						}
 					}
 				}
-				
-
 
 				$r = $_REQUEST;
 				if($_FILES){

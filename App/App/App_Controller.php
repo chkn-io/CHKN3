@@ -23,6 +23,7 @@ class App_Controller{
   public $maintenance;
   public $tem_tool;
   public $auth;
+  public $csrf;
 
   protected $post;
    protected $get;
@@ -47,6 +48,9 @@ class App_Controller{
         if(MAINTENANCE_CLASS == 1){
            $this->maintenance = new maintenance;
         }
+        if(CSRF == 1){
+          $this->csrf = new CSRFToken;
+        }
 
         $this->tem_tool = new CHKNTemplate;
         $this->auth = new Auth;
@@ -60,6 +64,13 @@ class App_Controller{
 				$this->chknError();
 			}
 		}
+  }
+  
+  function invalid_request(){
+		header("HTTP/1.0 401");
+		$file = file_get_contents(DEFAULT_URL."view/defaults/invalid_request.tpl");
+		echo $file;
+		exit;
 	}
 
     /**

@@ -51,8 +51,8 @@ class Auth extends Controller
     	if(count($data) != 0){
     		$decrypt_password = $this->helper->decrypt($users[0][$keys[1]]);
     		if($decrypt_password == $data[$keys[1]]){
-    			$this->session_put("auth",$users[0]);
-                $this->session_put("auth_message",["message" => "Authentication Success","status"=>"success"]);
+    			$this->session->put("auth",$users[0]);
+                $this->session->put("auth_message",["message" => "Authentication Success","status"=>"success"]);
     			if(isset($data["url"])){
     				if(isset($data["url"]["success"])){
                         $this->locate($data["url"]["success"]);
@@ -64,7 +64,7 @@ class Auth extends Controller
     			}
 
     		}else{
-                $this->session_put("auth_message",["message" => "Wrong Username or Password","status"=>"error"]);
+                $this->session->put("auth_message",["message" => "Wrong Username or Password","status"=>"error"]);
     			if(isset($data["url"])){
                     if(isset($data["url"]["failed"])){
                         $this->locate($data["url"]["failed"]);
@@ -77,7 +77,7 @@ class Auth extends Controller
     		}
     	}else{
             if(isset($data["url"])){
-                $this->session_put("auth_message",["message" => "Error","status"=>"error"]);
+                $this->session->put("auth_message",["message" => "Error","status"=>"error"]);
                 if(isset($data["url"]["failed"])){
                     $this->locate($data["url"]["failed"]);
                 }else{

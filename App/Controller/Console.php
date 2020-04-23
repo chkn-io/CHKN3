@@ -228,6 +228,9 @@ class '.$controller.'Controller extends Controller{
 
 	public function checkdatabase(){
 		$db = $this->CRUD->check_db();
+		if($db == ""){
+			$db = [];
+		}
 		if(count($db) == 0){
 			echo $this->response(["message"=>"Database found","type"=>"success"],200);
 		}else{
@@ -292,10 +295,10 @@ class AuthController extends Controller{
 	}
 
 	public function login(Request $r){
-		if($r->post("username") != ""){
+		if($r->username != ""){
 			$this->auth->login("chkn_auth",[
-				"username"=>$r->post("username"),
-				"password"=>$r->post("password"),
+				"username"=>$r->username,
+				"password"=>$r->password,
 				"url"=>[
 					//Redirect when true
 					"success"=>"",
@@ -340,7 +343,8 @@ class AuthController extends Controller{
 		}else{
 
 		#}
-		<form method="post" action="[path]auth/login">
+		<form method="post" action="[chkn:path]auth/login">
+			[form:csrf]
 			<div class="form-group">
 				<label>Username</label>
 				<input class="form-control" type="text" name="username" placeholder="Enter your username">
@@ -365,17 +369,17 @@ class AuthController extends Controller{
 				    }
 				}
 
-			    if(!file_exists("view/template/auth.cvf")){
-			    	$temp = fopen("view/template/auth.cvf", "w");
+			    if(!file_exists("view/template/auth.tpl")){
+			    	$temp = fopen("view/template/auth.tpl", "w");
 			    	$tempcontent = '
 <!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8" >
-    <title>{DEFAULT_TITLE}</title>
-    <link rel="icon" href="[path]public/images/icon.ico">
+    <title>[chkn:title]</title>
+    <link rel="icon" href="[chkn:path]public/images/icon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    {DEFAULT_STYLE}
+    [chkn:style]
     <style>
 	body{
 		background-image: linear-gradient(180deg,#045c14,#32ea0c);
@@ -405,9 +409,9 @@ class AuthController extends Controller{
 </head>
 <body>
     <div id="content">
-        {DEFAULT_BODY}              
+        [chkn:body]             
     </div>
-{DEFAULT_SCRIPT}
+[chkn:script]
 </body>
 
 </html>
