@@ -47,13 +47,13 @@ class CRUD {
         return $this;
     }
 
-    public function select($table){
+    public function select($table,$fields="*"){
         if(QUERY_BUILDER == 1){
             $this->index_counter = 0;
             $this->indexes = array();
             $this->jointrace = false;
             $this->q = "";
-            $this->q = 'SELECT * FROM '.$table.' ';
+            $this->q = 'SELECT '.$fields.' FROM '.$table.' ';
             return $this;
         }else{
             echo "QUERY_BUILDER is disabled";
